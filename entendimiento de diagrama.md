@@ -109,3 +109,10 @@ Ej: Un pasajero en Av. Principal quiere ir a Calle Secundaria
 
 - Subir a colectivo
 - Bajar de colectivo
+
+---
+usar una aplicacion grafica . (nose, mejor terminal)
+
+java.util usar list y arraylist
+
+primero empezamos con modelo (mirar ejemplo).
