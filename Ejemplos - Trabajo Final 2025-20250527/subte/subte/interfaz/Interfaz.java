@@ -9,18 +9,18 @@ import subte.modelo.Tramo;
 
 public class Interfaz {
 
-	// Usuario ingresa opción
+	// Usuario ingresa opcion
 	public static int opcion() {
 		return Constante.MAS_RAPIDO;
 	}
 
-	// Usuario ingresa estación origen
+	// Usuario ingresa estacion origen
 	public static Estacion ingresarEstacionOrigen(
 			TreeMap<String, Estacion> estaciones) {
 		return estaciones.get("a2");
 	}
 
-	// Usuario ingresa estación destino
+	// Usuario ingresa estacion destino
 	public static Estacion ingresarEstacionDestino(
 			TreeMap<String, Estacion> estaciones) {
 		return estaciones.get("c6");

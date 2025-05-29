@@ -21,7 +21,7 @@ public class Aplicacion {
 		try {
 			CargarParametros.parametros();
 		} catch (IOException e) {
-			System.err.print("Error al cargar parámetros");
+			System.err.print("Error al cargar parï¿½metros");
 			System.exit(-1);
 		}
 
@@ -48,7 +48,7 @@ public class Aplicacion {
 		Estacion origen = Interfaz.ingresarEstacionOrigen(estaciones);
 		Estacion destino = Interfaz.ingresarEstacionDestino(estaciones);
 
-		// Realizar cálculo
+		// Realizar cï¿½lculo
 		Calculo c = new Calculo(estaciones, tramos);
 
 		List<Tramo> recorrido = null;
