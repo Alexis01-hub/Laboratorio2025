@@ -1,4 +1,4 @@
-package Colectivo.colectivo.modelo;
+package colectivo.modelo;
 
 import java.util.ArrayList;
 import java.util.List;

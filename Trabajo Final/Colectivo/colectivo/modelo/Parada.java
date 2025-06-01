@@ -1,4 +1,4 @@
-package Colectivo.colectivo.modelo;
+package colectivo.modelo;
 
 /**
  * Representa una parada del colectivo, identificada por un id y una dirección.

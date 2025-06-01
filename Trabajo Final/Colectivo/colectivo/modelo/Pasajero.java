@@ -1,4 +1,4 @@
-package Colectivo.colectivo.modelo;
+package colectivo.modelo;
 
 /**
  * Representa un pasajero que viaja en el colectivo, con un identificador,
