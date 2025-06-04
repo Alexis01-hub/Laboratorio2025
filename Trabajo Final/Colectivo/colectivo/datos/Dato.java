@@ -27,27 +27,29 @@ public class Dato {
      */
     public static TreeMap<String, Linea> cargarLineas(String fileName, TreeMap<Integer, Parada> paradas) throws FileNotFoundException {
         Scanner read = new Scanner(new File(fileName));
-        TreeMap<String, Linea> lineas = new TreeMap<>();
+        TreeMap<String, Linea> lineas = new TreeMap<>(); // Mapa para almacenar las líneas cargadas
+        // Itera sobre cada línea del archivo
         while (read.hasNextLine()) {
-            String lineaTxt = read.nextLine().trim();
-            if (lineaTxt.isEmpty() || lineaTxt.startsWith("#")) continue;
-            Scanner lineaScanner = new Scanner(lineaTxt);
-            lineaScanner.useDelimiter("\\s*;\\s*");
-            String codigo = lineaScanner.next();
-            Linea linea = new Linea(codigo);
+            String lineaTxt = read.nextLine().trim(); // Lee la línea y elimina espacios en blanco al inicio y al final
+            if (lineaTxt.isEmpty() || lineaTxt.startsWith("#")) continue; // Ignora comentarios y líneas vacías
+            Scanner lineaScanner = new Scanner(lineaTxt); // crea un scanner para procesar la línea actual
+            lineaScanner.useDelimiter("\\s*;\\s*"); // Usa ´;´ como delimitador
+            String codigo = lineaScanner.next(); // obtiene el código de la línea 
+            Linea linea = new Linea(codigo); // Crea una nueva línea con ese código
+
             // Agregar paradas a la línea
             while (lineaScanner.hasNextInt()) {
-                int idParada = lineaScanner.nextInt();
-                Parada parada = paradas.get(idParada);
+                int idParada = lineaScanner.nextInt(); // Obtiene el id de la parada
+                Parada parada = paradas.get(idParada); // Busca la parada en el mapa de paradas
                 if (parada != null) {
-                    linea.agregarParada(parada);
+                    linea.agregarParada(parada); // Si la parada existe, la agrega a la línea
                 }
             }
-            lineas.put(codigo, linea);
-            lineaScanner.close();
+            lineas.put(codigo, linea); // Agrega la línea al mapa de líneas
+            lineaScanner.close(); 
         }
         read.close();
-        return lineas;
+        return lineas; // Devuelve el mapa de líneas cargadas
     }
 
     /**
@@ -65,22 +67,25 @@ public class Dato {
      */
     public static TreeMap<Integer, Parada> cargarParadas(String fileName) throws FileNotFoundException {
         Scanner read;
-        TreeMap<Integer, Parada> paradas = new TreeMap<>();
-        read = new Scanner(new File(fileName));
+        TreeMap<Integer, Parada> paradas = new TreeMap<>(); // Mapa para almacenar las paradas cargadas
+        read = new Scanner(new File(fileName)); // Crea un scanner para leer el archivo de paradas
+        
+        // Itera sobre cada línea del archivo
         while (read.hasNextLine()) {
-            String lineaTxt = read.nextLine().trim();
+            String lineaTxt = read.nextLine().trim(); // Lee la línea y elimina espacios en blanco al inicio y al final
             if (lineaTxt.isEmpty() || lineaTxt.startsWith("#")) continue; // Ignora comentarios y líneas vacías
-            Scanner lineaScanner = new Scanner(lineaTxt);
-            lineaScanner.useDelimiter("\\s*;\\s*");
-            int id = Integer.parseInt(lineaScanner.next());
-            String direccion = lineaScanner.next();
-            // No se asocia a ninguna línea aquí
-            Parada parada = new Parada(id, direccion);
-            paradas.put(id, parada);
-            lineaScanner.close();
+            Scanner lineaScanner = new Scanner(lineaTxt); // Crea un scanner para procesar la línea actual
+            lineaScanner.useDelimiter("\\s*;\\s*"); // Usa ´;´ como delimitador
+            int id = Integer.parseInt(lineaScanner.next()); // Obtiene el id de la parada
+            String direccion = lineaScanner.next(); // Obtiene la dirección de la parada
+
+            // Crea una parada
+            Parada parada = new Parada(id, direccion); // Crea una nueva parada con el id y la dirección
+            paradas.put(id, parada); // Agrega la parada al mapa de paradas
+            lineaScanner.close(); 
         }
         read.close();
-        return paradas;
+        return paradas; // Devuelve el mapa de paradas cargadas
     }
 
 }

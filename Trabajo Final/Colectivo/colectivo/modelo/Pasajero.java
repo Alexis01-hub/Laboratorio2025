@@ -17,7 +17,7 @@ public class Pasajero {
      * @param destino Parada de destino del pasajero.
      */
     public Pasajero(int id, Parada origen, Parada destino) {
-        this.id = id; //revisar posible error
+        this.id = id; 
         this.origen = origen;
         this.destino = destino;
     }
