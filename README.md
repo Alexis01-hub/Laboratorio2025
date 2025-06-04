@@ -120,9 +120,9 @@ L6R;66;32;39;12;22;33;20;23;25;24;5;1;
 
 ---
 
-> .[!IMPORTANT]
-> Creado por Alexis Mamani 
-> @Alexis01-hub
+>[!IMPORTANT]
+> Creado por:
+> Alexis Mamani
 
 
 
