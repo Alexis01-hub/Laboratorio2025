@@ -23,12 +23,13 @@ public class CargarParametros {
      * @throws IOException Si ocurre un error al leer el archivo o faltan parámetros requeridos.
      */
     public static void cargar() throws IOException {
-        Properties prop = new Properties();
+        Properties prop = new Properties(); // Crea un objeto Properties para manejar las Propiedades
+        // Intenta cargar el archivo de propiedades desde la ruta especificada
         try (InputStream input = new FileInputStream("config.properties")) {
-            prop.load(input); 
-            archivoLineas = prop.getProperty("linea");
-            archivoParadas = prop.getProperty("parada");
-            String cantidad = prop.getProperty("cantidadPasajeros");
+            prop.load(input); // Carga las propiedades desde el archivo
+            archivoLineas = prop.getProperty("linea"); // Obtiene la Propiedad 'linea' y la asigna a archivoLineas
+            archivoParadas = prop.getProperty("parada"); // Obtiene la Propiedad 'parada' y la asigna a archivoParadas
+            String cantidad = prop.getProperty("cantidadPasajeros"); // Obtiene la Propiedad 'cantidadPasajeros' y la asigna a cantidad
             
             // Validación básica de los parámetros cargados
             if (archivoLineas == null || archivoParadas == null || cantidad == null) {
@@ -36,7 +37,7 @@ public class CargarParametros {
             }
             // Intentar convertir la cantidad de pasajeros a un entero
             try {
-                cantidadPasajeros = Integer.parseInt(cantidad);
+                cantidadPasajeros = Integer.parseInt(cantidad); // Convierte la cadena a un entero
             } catch (NumberFormatException e) {
                 throw new IOException("El valor de cantidadPasajeros no es un número válido", e);
             }

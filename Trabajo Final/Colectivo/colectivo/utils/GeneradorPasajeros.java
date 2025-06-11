@@ -23,20 +23,20 @@ public class GeneradorPasajeros {
      * @return una lista de pasajeros generados aleatoriamente
      */
     public static List<Pasajero> generar(int cantidad, TreeMap<Integer, Parada> paradas) {
-        List<Pasajero> pasajeros = new ArrayList<>();
-        List<Parada> listaParadas = new ArrayList<>();
-        for (Parada p : paradas.values()) {
-            listaParadas.add(p);
+        List<Pasajero> pasajeros = new ArrayList<>(); // Lista para almacenar los pasajeros generados
+        List<Parada> listaParadas = new ArrayList<>(); // Lista auxiliar para seleccionar orígenes y destinos aleatorios
+        for (Parada p : paradas.values()) { // Itera sobre las paradas del mapa
+            listaParadas.add(p); // Agrega cada parada a la lista auxiliar
         }
         Random rand = new Random();
-        for (int i = 0; i < cantidad; i++) {
-            Parada origen = listaParadas.get(rand.nextInt(listaParadas.size()));
-            Parada destino;
+        for (int i = 0; i < cantidad; i++) {    // Genera la cantidad de pasajeros especificada
+            Parada origen = listaParadas.get(rand.nextInt(listaParadas.size())); // Selecciona un origen aleatorio de la lista de paradas
+            Parada destino; 
             do {
-                destino = listaParadas.get(rand.nextInt(listaParadas.size()));
-            } while (destino.equals(origen));
-            pasajeros.add(new Pasajero(i, origen, destino));
+                destino = listaParadas.get(rand.nextInt(listaParadas.size())); // Selecciona un destino aleatorio de la lista de paradas
+            } while (destino.equals(origen)); // repite hasta que el destino sea diferente del origen
+            pasajeros.add(new Pasajero(i, origen, destino)); // Crea un nuevo pasajero con el id, origen y destino seleccionados
         }
-        return pasajeros;
+        return pasajeros; // Devuelve la lista de pasajeros generados
     }
 }
