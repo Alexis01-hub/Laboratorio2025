@@ -16,11 +16,13 @@ import net.datastructures.TreeMap;
 /**
  * Clase principal que ejecuta la simulación del sistema de colectivos.
  * Lee la configuración, genera pasajeros aleatorios, crea colectivos por línea
- * y simula el recorrido de cada colectivo mostrando subidas y bajadas de pasajeros.
+ * y simula el recorrido de cada colectivo mostrando subidas y bajadas de
+ * pasajeros.
  */
 public class Simulador {
     /**
      * Punto de entrada de la aplicación.
+     * 
      * @param args argumentos de línea de comandos (no se utilizan)
      * @throws Exception si ocurre un error al leer archivos o procesar datos
      */
@@ -28,13 +30,15 @@ public class Simulador {
         // Leer configuración desde el archivo config.properties
         Properties config = new Properties();
         config.load(new FileInputStream("config.properties"));
-        int cantidadPasajeros = Integer.parseInt(config.getProperty("cantidadPasajeros", "100")); // Lee la cantidad de psasajeros
+        int cantidadPasajeros = Integer.parseInt(config.getProperty("cantidadPasajeros", "100")); // Lee la cantidad de
+                                                                                                  // psasajeros
         String archivoParadas = config.getProperty("parada", "parada.txt"); // lee la ruta del archivo de paradas
         String archivoLineas = config.getProperty("linea", "linea.txt"); // lee la ruta del archivo de líneas
 
         // Cargar datos de paradas y líneas
         TreeMap<Integer, Parada> paradas = Dato.cargarParadas(archivoParadas); // Carga las paradas desde el archivo
-        TreeMap<String, Linea> lineas = Dato.cargarLineas(archivoLineas, paradas); // Carga las líneas desde el archivo, asociando las paradas
+        TreeMap<String, Linea> lineas = Dato.cargarLineas(archivoLineas, paradas); // Carga las líneas desde el archivo,
+                                                                                   // asociando las paradas
 
         // Generar pasajeros aleatorios usando la cantidad definida en la configuración
         List<Pasajero> pasajeros = GeneradorPasajeros.generar(cantidadPasajeros, paradas);
@@ -50,7 +54,8 @@ public class Simulador {
             for (Pasajero p : pasajeros) {
                 List<Parada> paradasLinea = c.getLinea().getParadas(); // Obtiene las paradas de la línea del colectivo
                 if (paradasLinea.contains(p.getOrigen()) && paradasLinea.contains(p.getDestino())) {
-                    c.subirPasajero(p); // Si el origen y destino del pasajero están en las paradas de la línea, lo sube al colectivo
+                    c.subirPasajero(p); // Si el origen y destino del pasajero están en las paradas de la línea, lo sube
+                                        // al colectivo
                 }
             }
         }
@@ -59,24 +64,30 @@ public class Simulador {
         for (Colectivo c : colectivos) {
             System.out.println("\n============================================================");
             System.out.println("Recorrido colectivo línea: " + c.getLinea().getCodigo() +
-                " (paradas: " + c.getLinea().getParadas().size() + ")");
+                    " (paradas: " + c.getLinea().getParadas().size() + ")");
             List<Parada> paradasLinea = c.getLinea().getParadas(); // Obtiene las paradas de la línea del colectivo
-            List<Pasajero> pasajerosEnColectivo = new ArrayList<>(); // Lista para llevar el registro de los pasajeros a bordo del colectivo
+            List<Pasajero> pasajerosEnColectivo = new ArrayList<>(); // Lista para llevar el registro de los pasajeros a
+                                                                     // bordo del colectivo
             for (Parada parada : paradasLinea) {
-                List<Pasajero> suben = new ArrayList<>(); // Lista para almacenar los pasajeros que suben en la parada actual
+                List<Pasajero> suben = new ArrayList<>(); // Lista para almacenar los pasajeros que suben en la parada
+                                                          // actual
                 // Pasajeros que suben en esta parada
                 for (Pasajero p : new ArrayList<>(c.getPasajeros())) {
                     if (p.getOrigen().equals(parada)) {
-                        suben.add(p); // Agrega el pasajero a la lista de suben si su origen coincide con la parada actual
+                        suben.add(p); // Agrega el pasajero a la lista de suben si su origen coincide con la parada
+                                      // actual
                         pasajerosEnColectivo.add(p); // Añade el pasajero a la lista de pasajeros a bordo del colectivo
                     }
                 }
-                List<Pasajero> bajan = new ArrayList<>(); // Lista para almacenar los pasajeros que bajan en la parada actual
+                List<Pasajero> bajan = new ArrayList<>(); // Lista para almacenar los pasajeros que bajan en la parada
+                                                          // actual
                 // Pasajeros que bajan en esta parada
                 for (Pasajero p : new ArrayList<>(pasajerosEnColectivo)) {
                     if (p.getDestino().equals(parada)) {
-                        bajan.add(p); // Agrega el pasajero a la lista de bajan si su destino coincide con la parada actual
-                        pasajerosEnColectivo.remove(p); // Elimina el pasajero de la lista de pasajeros a bordo del colectivo
+                        bajan.add(p); // Agrega el pasajero a la lista de bajan si su destino coincide con la parada
+                                      // actual
+                        pasajerosEnColectivo.remove(p); // Elimina el pasajero de la lista de pasajeros a bordo del
+                                                        // colectivo
                     }
                 }
                 System.out.println("------------------------------------------------------------");
@@ -87,7 +98,8 @@ public class Simulador {
             }
             // Al finalizar el recorrido, verificar si quedan pasajeros a bordo
             if (!pasajerosEnColectivo.isEmpty()) {
-                System.out.println(">>> Atención: Quedaron " + pasajerosEnColectivo.size() + " pasajeros a bordo al finalizar el recorrido. Fueron bajados forzosamente.");
+                System.out.println(">>> Atención: Quedaron " + pasajerosEnColectivo.size()
+                        + " pasajeros a bordo al finalizar el recorrido. Fueron bajados forzosamente.");
                 pasajerosEnColectivo.clear();
             }
             System.out.println("============================================================\n");
