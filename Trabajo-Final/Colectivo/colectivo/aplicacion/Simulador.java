@@ -29,11 +29,11 @@ public class Simulador {
     public static void main(String[] args) throws Exception {
         // Leer configuración desde el archivo config.properties
         Properties config = new Properties();
-        config.load(new FileInputStream("config.properties"));
+        config.load(new FileInputStream("Colectivo/config.properties"));
         int cantidadPasajeros = Integer.parseInt(config.getProperty("cantidadPasajeros", "100")); // Lee la cantidad de
                                                                                                   // psasajeros
-        String archivoParadas = config.getProperty("parada", "parada.txt"); // lee la ruta del archivo de paradas
-        String archivoLineas = config.getProperty("linea", "linea.txt"); // lee la ruta del archivo de líneas
+        String archivoParadas = config.getProperty("parada", "Colectivo/parada.txt"); // lee la ruta del archivo de paradas
+        String archivoLineas = config.getProperty("linea", "Colectivo/linea.txt"); // lee la ruta del archivo de líneas
 
         // Cargar datos de paradas y líneas
         TreeMap<Integer, Parada> paradas = Dato.cargarParadas(archivoParadas); // Carga las paradas desde el archivo
