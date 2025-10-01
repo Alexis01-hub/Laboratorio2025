@@ -3,9 +3,9 @@ package colectivo.datos;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import net.datastructures.*;
 import colectivo.modelo.Parada;
 import colectivo.modelo.Linea;
+import net.datastructures.TreeMap;
 
 /**
  * Clase utilitaria para cargar datos de líneas y paradas desde archivos de texto.
