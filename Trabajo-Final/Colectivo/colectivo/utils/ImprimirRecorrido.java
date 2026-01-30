@@ -8,10 +8,10 @@ import colectivo.modelo.Pasajero;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import net.datastructures.TreeMap;
+import net.datastructures.Map;
 
 public class ImprimirRecorrido {
-    public static void imprimirRecorrido(List<Colectivo> colectivos, TreeMap<String, Linea> lineas) {
+    public static void imprimirRecorrido(List<Colectivo> colectivos, Map<String, Linea> lineas) {
         Scanner scanner = new Scanner(System.in);
         boolean continuar = true;
         while (continuar) {

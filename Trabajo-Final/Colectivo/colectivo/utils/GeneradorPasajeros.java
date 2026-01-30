@@ -2,7 +2,7 @@ package colectivo.utils;
 
 import colectivo.modelo.Parada;
 import colectivo.modelo.Pasajero;
-import net.datastructures.TreeMap;
+import net.datastructures.Map;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class GeneradorPasajeros {
      * @param paradas  el mapa de paradas disponibles
      * @return una lista de pasajeros generados aleatoriamente
      */
-    public static List<Pasajero> generar(int cantidad, TreeMap<Integer, Parada> paradas) {
+    public static List<Pasajero> generar(int cantidad, Map<Integer, Parada> paradas) {
         List<Pasajero> pasajeros = new ArrayList<>(); // Lista para almacenar los pasajeros generados
         List<Parada> listaParadas = new ArrayList<>(); // Lista auxiliar para seleccionar orígenes y destinos aleatorios
         for (Parada p : paradas.values()) { // Itera sobre las paradas del mapa

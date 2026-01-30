@@ -12,7 +12,8 @@ import colectivo.modelo.Linea;
 import colectivo.modelo.Parada;
 import colectivo.modelo.Pasajero;
 import colectivo.utils.GeneradorPasajeros;
-import net.datastructures.TreeMap;
+import net.datastructures.Map;
+import colectivo.utils.ImprimirRecorrido;
 
 /**
  * Clase principal que ejecuta la simulación del sistema de colectivos.
@@ -31,8 +32,8 @@ public class Simulador {
         String archivoLineas = config.getProperty("linea", "Colectivo/linea.txt"); // lee la ruta del archivo de líneas
 
         // Cargar datos de paradas y líneas
-        TreeMap<Integer, Parada> paradas = Dato.cargarParadas(archivoParadas); // Carga las paradas desde el archivo
-        TreeMap<String, Linea> lineas = Dato.cargarLineas(archivoLineas, paradas); // Carga las líneas desde el archivo, asociando las paradas
+        Map<Integer, Parada> paradas = Dato.cargarParadas(archivoParadas); // Carga las paradas desde el archivo
+        Map<String, Linea> lineas = Dato.cargarLineas(archivoLineas, paradas); // Carga las líneas desde el archivo, asociando las paradas
 
         // Generar pasajeros aleatorios usando la cantidad definida en la configuración
         List<Pasajero> pasajeros = GeneradorPasajeros.generar(cantidadPasajeros, paradas);
@@ -54,7 +55,7 @@ public class Simulador {
         }
 
         // Mostrar las líneas disponibles y pedir al usuario que seleccione una
-        colectivo.utils.ImprimirRecorrido.imprimirRecorrido(colectivos, lineas);
+        ImprimirRecorrido.imprimirRecorrido(colectivos, lineas);
         System.out.println("Simulación finalizada.");
     }
 }
