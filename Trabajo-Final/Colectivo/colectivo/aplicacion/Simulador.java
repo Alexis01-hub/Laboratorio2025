@@ -3,15 +3,15 @@ package colectivo.aplicacion;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Properties;
-import java.io.FileInputStream;
 
 
 import colectivo.modelo.Colectivo;
-import colectivo.datos.Dato;
+import colectivo.datos.CargadorDatos;
 import colectivo.modelo.Linea;
 import colectivo.modelo.Parada;
 import colectivo.modelo.Pasajero;
 import colectivo.utils.GeneradorPasajeros;
+import colectivo.datos.CargarParametros;
 import net.datastructures.Map;
 import colectivo.utils.ImprimirRecorrido;
 
@@ -25,15 +25,14 @@ public class Simulador {
     public static void main(String[] args) throws Exception {
 
         // Leer configuración desde el archivo config.properties
-        Properties config = new Properties();
-        config.load(new FileInputStream("Colectivo/config.properties"));
-        int cantidadPasajeros = Integer.parseInt(config.getProperty("cantidadPasajeros", "100")); // Lee la cantidad de pasajeros
-        String archivoParadas = config.getProperty("parada", "Colectivo/parada.txt"); // lee la ruta del archivo de paradas
-        String archivoLineas = config.getProperty("linea", "Colectivo/linea.txt"); // lee la ruta del archivo de líneas
+        Properties config = CargarParametros.cargar();
+        int cantidadPasajeros = Integer.parseInt(config.getProperty("cantidadPasajeros", "100"));
+        String archivoParadas = config.getProperty("parada", "Colectivo/parada.txt");
+        String archivoLineas = config.getProperty("linea", "Colectivo/linea.txt");
 
         // Cargar datos de paradas y líneas
-        Map<Integer, Parada> paradas = Dato.cargarParadas(archivoParadas); // Carga las paradas desde el archivo
-        Map<String, Linea> lineas = Dato.cargarLineas(archivoLineas, paradas); // Carga las líneas desde el archivo, asociando las paradas
+        Map<Integer, Parada> paradas = CargadorDatos.cargarParadas(archivoParadas); // Carga las paradas desde el archivo
+        Map<String, Linea> lineas = CargadorDatos.cargarLineas(archivoLineas, paradas); // Carga las líneas desde el archivo, asociando las paradas
 
         // Generar pasajeros aleatorios usando la cantidad definida en la configuración
         List<Pasajero> pasajeros = GeneradorPasajeros.generar(cantidadPasajeros, paradas);

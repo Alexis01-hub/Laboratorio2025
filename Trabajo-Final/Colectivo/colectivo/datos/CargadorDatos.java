@@ -11,7 +11,7 @@ import net.datastructures.ChainHashMap; // chainhashmap es necesario porque en l
 /**
  * Clase utilitaria para cargar datos de líneas y paradas desde archivos de texto.
  */
-public class Dato {
+public class CargadorDatos {
 
     /**
      * Carga las líneas de colectivos desde un archivo de texto.

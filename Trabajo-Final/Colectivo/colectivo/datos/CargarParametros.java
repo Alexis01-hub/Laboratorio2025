@@ -20,12 +20,13 @@ public class CargarParametros {
      * Carga los parámetros desde el archivo 'config.properties'.
      * Asigna los valores de las propiedades 'linea', 'parada' y 'cantidadPasajeros' a las variables correspondientes.
      *
+     *
      * @throws IOException Si ocurre un error al leer el archivo o faltan parámetros requeridos.
      */
-    public static void cargar() throws IOException {
+    public static Properties cargar() throws IOException {
         Properties prop = new Properties(); // Crea un objeto Properties para manejar las Propiedades
         // Intenta cargar el archivo de propiedades desde la ruta especificada
-        try (InputStream input = new FileInputStream("config.properties")) {
+        try (InputStream input = new FileInputStream("Colectivo/config.properties")) {
             prop.load(input); // Carga las propiedades desde el archivo
             archivoLineas = prop.getProperty("linea"); // Obtiene la Propiedad 'linea' y la asigna a archivoLineas
             archivoParadas = prop.getProperty("parada"); // Obtiene la Propiedad 'parada' y la asigna a archivoParadas
@@ -41,7 +42,11 @@ public class CargarParametros {
             } catch (NumberFormatException e) {
                 throw new IOException("El valor de cantidadPasajeros no es un número válido", e);
             }
+        } catch (IOException ex) {
+            throw new IOException("Error al cargar el archivo de configuración", ex);
         }
+
+        return prop;
     }
 
     /**
