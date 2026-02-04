@@ -55,20 +55,16 @@ public class CargadorDatos {
     /**
      * Carga las paradas de colectivos desde un archivo de texto.
      * Cada línea del archivo debe tener el formato:
-     * <pre>
-     * idParada;direccion;
-     * </pre>
-     * donde {@code idParada} es el identificador numérico de la parada y {@code direccion} es su dirección.
-     * Las líneas vacías o que comienzan con '#' se ignoran.
+     *
+     * " idParada;direccion; "
      *
      * @param fileName nombre del archivo de paradas
-     * @return un TreeMap con las paradas cargadas, donde la clave es el id de la parada
+     * @return un HashMap con las paradas cargadas, donde la clave es el id de la parada
      * @throws FileNotFoundException si el archivo no existe
      */
     public static Map<Integer, Parada> cargarParadas(String fileName) throws FileNotFoundException {
-        Scanner read;
+        Scanner read = new Scanner(new File(fileName)); // Crea un scanner para leer el archivo de paradas;
         Map<Integer, Parada> paradas = new ChainHashMap<>(); // Mapa para almacenar las paradas cargadas
-        read = new Scanner(new File(fileName)); // Crea un scanner para leer el archivo de paradas
         
         // Itera sobre cada línea del archivo
         while (read.hasNextLine()) {
@@ -77,17 +73,18 @@ public class CargadorDatos {
             Scanner lineaScanner = new Scanner(lineaTxt); // Crea un scanner para procesar la línea actual
             lineaScanner.useDelimiter("\\s*;\\s*"); // Usa ´;´ como delimitador
             if (!lineaScanner.hasNext()) {
-                lineaScanner.close();
+                lineaScanner.close(); // Cierra el scanner si no hay más datos que cargar
                 continue;
             }
-            String idToken = lineaScanner.next(); // Obtiene el token del id de la parada
+            String idParada = lineaScanner.next(); // Obtiene el token del id de la parada
             try {
-                int id = Integer.parseInt(idToken); // Convierte el token a un entero
-                String direccion = lineaScanner.hasNext() ? lineaScanner.next() : ""; // Obtiene la dirección de la parada
+                int id = Integer.parseInt(idParada); // Convierte el id de la parada a un entero
+                String direccion = lineaScanner.hasNext() ? lineaScanner.next() : ""; // Obtiene la dirección de la parada y maneja el caso donde no hay dirección
                 Parada parada = new Parada(id, direccion);
                 paradas.put(id, parada); // Agrega la parada al mapa de paradas
             } catch (NumberFormatException e) {
-                // Línea con id inválido: ignorar
+                // Línea con id inválido, se puede registrar un error o ignorar
+                System.out.println("ID de parada inválido: " + idParada);
             }
             lineaScanner.close();
         }
