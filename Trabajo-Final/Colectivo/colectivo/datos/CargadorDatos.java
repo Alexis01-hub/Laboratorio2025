@@ -18,7 +18,7 @@ public class CargadorDatos {
      *
      * @param fileName nombre del archivo de líneas
      * @param paradas mapa de paradas ya cargadas, para asociar a cada línea
-     * @return un TreeMap con las líneas cargadas, donde la clave es el código de línea
+     * @return un HashMap con las líneas cargadas, donde la clave es el código de la línea
      * @throws FileNotFoundException si el archivo no existe
      */
     public static Map<String, Linea> cargarLineas(String fileName, Map<Integer, Parada> paradas) throws FileNotFoundException {
@@ -28,7 +28,7 @@ public class CargadorDatos {
         while (read.hasNextLine()) {
             String lineaTxt = read.nextLine().trim(); // Lee la línea y elimina espacios en blanco al inicio y al final
             if (lineaTxt.isEmpty() || lineaTxt.startsWith("#")) continue; // Ignora comentarios y líneas vacías
-            Scanner lineaScanner = new Scanner(lineaTxt); // crea un scanner para procesar la línea actual
+            Scanner lineaScanner = new Scanner(lineaTxt);
             lineaScanner.useDelimiter("\\s*;\\s*"); // Usa ´;´ como delimitador
             if (!lineaScanner.hasNext()) {
                 lineaScanner.close(); // Cierra el scanner si no hay más paradas que cargar
