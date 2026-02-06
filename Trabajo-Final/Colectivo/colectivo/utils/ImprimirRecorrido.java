@@ -21,10 +21,18 @@ public class ImprimirRecorrido {
             }
             String codigoSeleccionado = null;
             Linea lineaSeleccionada = null;
+
             while (lineaSeleccionada == null) {
                 System.out.print("\nIngrese el código de la línea que desea ver: ");
-                codigoSeleccionado = scanner.nextLine();
-                lineaSeleccionada = lineas.get(codigoSeleccionado);
+                codigoSeleccionado = scanner.nextLine().trim();
+                //busca la linea ignorando mayus/minusculas
+                for (Linea l : lineas.values()) {
+                    if (l.getCodigo().equalsIgnoreCase(codigoSeleccionado)) {
+                        lineaSeleccionada = l;
+                        break;
+                    }
+                }
+
                 if (lineaSeleccionada == null) {
                     System.out.println("Código inválido. Intente nuevamente.");
                 }
