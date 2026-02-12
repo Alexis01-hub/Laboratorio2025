@@ -1,0 +1,107 @@
+@startuml
+' Diagrama de clases del proyecto Colectivo
+
+skinparam classAttributeIconSize 0
+skinparam dpi 120
+
+package "colectivo.modelo" {
+  class Colectivo {
+    - linea: Linea
+    - pasajeros: List<Pasajero>
+    + Colectivo(linea: Linea)
+    + getLinea(): Linea
+    + getPasajeros(): List<Pasajero>
+    + subirPasajero(p: Pasajero): void
+    + bajarPasajero(p: Pasajero): void
+  }
+
+  class Linea {
+    - codigo: String
+    ~ paradas: List<Parada>
+    + Linea(codigo: String)
+    + agregarParada(parada: Parada): void
+    + getCodigo(): String
+    + getParadas(): List<Parada>
+    + toString(): String
+  }
+
+  class Parada {
+    - id: int
+    - direccion: String
+    + Parada(id: int, direccion: String)
+    + getId(): int
+    + setId(id: int): void
+    + getDireccion(): String
+    + setDireccion(direccion: String): void
+    + toString(): String
+  }
+
+  class Pasajero {
+    - id: int
+    - origen: Parada
+    - destino: Parada
+    + Pasajero(id: int, origen: Parada, destino: Parada)
+    + getId(): int
+    + getOrigen(): Parada
+    + getDestino(): Parada
+    + setDestino(destino: Parada): void
+    + toString(): String
+  }
+}
+
+package "colectivo.datos" {
+  class CargarParametros {
+    - archivoLineas: String
+    - archivoParadas: String
+    - cantidadPasajeros: int
+    + cargar(): Properties
+    + getArchivoLineas(): String
+    + getArchivoParadas(): String
+    + getCantidadPasajeros(): int
+  }
+
+  class CargadorDatos {
+    + cargarLineas(fileName: String, paradas: Map<Integer, Parada>): Map<String, Linea>
+    + cargarParadas(fileName: String): Map<Integer, Parada>
+  }
+}
+
+package "colectivo.utils" {
+  class GeneradorPasajeros {
+    + generar(cantidad: int, paradas: Map<Integer, Parada>): List<Pasajero>
+  }
+
+  class ImprimirRecorrido {
+    + imprimirRecorrido(colectivos: List<Colectivo>, lineas: Map<String, Linea>): void
+  }
+}
+
+package "colectivo.aplicacion" {
+  class Simulador {
+    + main(args: String[]): void
+  }
+}
+
+
+' Relaciones del dominio
+Colectivo --> Linea : pertenece a >
+Colectivo "1" o-- "0..*" Pasajero : pasajeros
+Linea "1" o-- "0..*" Parada : paradas
+Pasajero --> Parada : origen
+Pasajero --> Parada : destino
+
+' Dependencias entre capas/utilidades
+CargadorDatos ..> Linea
+CargadorDatos ..> Parada
+GeneradorPasajeros ..> Pasajero
+ImprimirRecorrido ..> Colectivo
+ImprimirRecorrido ..> Linea
+ImprimirRecorrido ..> Parada
+ImprimirRecorrido ..> Pasajero
+
+Simulador ..> "colectivo.utils"
+Simulador ..> "colectivo.modelo"
+Simulador ..> "colectivo.datos"
+
+
+@enduml

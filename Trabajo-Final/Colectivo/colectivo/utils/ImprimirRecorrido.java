@@ -19,12 +19,12 @@ public class ImprimirRecorrido {
             for (Linea l : lineas.values()) {
                 System.out.println("  Código: " + l.getCodigo());
             }
-            String codigoSeleccionado = null;
+
             Linea lineaSeleccionada = null;
 
             while (lineaSeleccionada == null) {
                 System.out.print("\nIngrese el código de la línea que desea ver: ");
-                codigoSeleccionado = scanner.nextLine().trim();
+                String codigoSeleccionado = scanner.nextLine().trim();
                 //busca la linea ignorando mayus/minusculas
                 for (Linea l : lineas.values()) {
                     if (l.getCodigo().equalsIgnoreCase(codigoSeleccionado)) {
@@ -48,10 +48,18 @@ public class ImprimirRecorrido {
 
             if (colectivoSeleccionado != null) {
                 System.out.println("\n============================================================");
-                System.out.println("Recorrido colectivo línea: " + colectivoSeleccionado.getLinea().getCodigo() + " (paradas: " + colectivoSeleccionado.getLinea().getParadas().size() + ")");
+                System.out.println("Recorrido colectivo línea: " + colectivoSeleccionado.getLinea().getCodigo()
+                        + " (paradas: " + colectivoSeleccionado.getLinea().getParadas().size() + ")");
+                System.out.println("Presione ENTER para avanzar a la siguiente parada...");
+                System.out.println("============================================================\n");
+
                 List<Parada> paradasDeLaLinea = colectivoSeleccionado.getLinea().getParadas();
                 List<Pasajero> pasajerosEnColectivo = new ArrayList<>();
-                for (Parada parada : paradasDeLaLinea) {
+
+                for (int i = 0; i < paradasDeLaLinea.size(); i++) {
+                    Parada parada = paradasDeLaLinea.get(i);
+
+                    // Procesar pasajeros que suben
                     List<Pasajero> suben = new ArrayList<>();
                     for (Pasajero p : new ArrayList<>(colectivoSeleccionado.getPasajeros())) {
                         if (p.getOrigen().equals(parada)) {
@@ -59,6 +67,8 @@ public class ImprimirRecorrido {
                             pasajerosEnColectivo.add(p);
                         }
                     }
+
+                    // Procesar pasajeros que bajan
                     List<Pasajero> bajan = new ArrayList<>();
                     for (Pasajero p : new ArrayList<>(pasajerosEnColectivo)) {
                         if (p.getDestino().equals(parada)) {
@@ -66,17 +76,31 @@ public class ImprimirRecorrido {
                             pasajerosEnColectivo.remove(p);
                         }
                     }
+
+                    // Mostrar información de la parada
                     System.out.println("------------------------------------------------------------");
-                    System.out.println("  Parada: " + parada.getDireccion());
-                    System.out.println("    Suben: " + suben.size());
-                    System.out.println("    Bajan: " + bajan.size());
-                    System.out.println("    Pasajeros a bordo: " + pasajerosEnColectivo.size());
+                    System.out.println("  Parada " + (i + 1) + "/" + paradasDeLaLinea.size() + ": " + parada.getDireccion());
+                    System.out.println("  Suben: " + suben.size());
+                    System.out.println("  Bajan: " + bajan.size());
+                    System.out.println("  Pasajeros a bordo: " + pasajerosEnColectivo.size());
+                    System.out.println("------------------------------------------------------------");
+
+                    // Esperar que el usuario presione ENTER para continuar (excepto en la última parada)
+                    if (i < paradasDeLaLinea.size() - 1) {
+                        System.out.print("\nPresione ENTER para continuar a la siguiente parada...");
+                        scanner.nextLine();
+                        System.out.println(); // Línea en blanco para separar
+                    }
                 }
+
                 if (!pasajerosEnColectivo.isEmpty()) {
-                    System.out.println(">>> Atención: Quedaron " + pasajerosEnColectivo.size()
+                    System.out.println("\n>>> Atención: Quedaron " + pasajerosEnColectivo.size()
                             + " pasajeros a bordo al finalizar el recorrido. Fueron bajados forzosamente.");
                     pasajerosEnColectivo.clear();
                 }
+
+                System.out.println("\n============================================================");
+                System.out.println("Recorrido finalizado");
                 System.out.println("============================================================\n");
             } else {
                 System.out.println("No se encontró el colectivo para la línea seleccionada.");
@@ -87,7 +111,10 @@ public class ImprimirRecorrido {
             if (!respuesta.equals("s") && !respuesta.equals("si") && !respuesta.equals("sí")) {
                 continuar = false;
             }
+
+            System.out.println(); // Línea en blanco antes de reiniciar
         }
+
         scanner.close();
     }
 }
