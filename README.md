@@ -391,21 +391,9 @@ L2I;48;13;79;7;84;83;90;16;17;55;
 
 ## Requisitos del Sistema
 
-- **Java**: JDK 8 o superior
+- **Java**: JDK 21 (version con la cual fue probada y creada)
 - **Dependencias**: Incluye estructuras de datos personalizadas del paquete `net.datastructures`
 - **Sistema operativo**: Multiplataforma (Windows, Linux, macOS)
-
----
-
-## Ejecución del Programa
-
-```bash
-# Compilar
-javac -d bin Colectivo/colectivo/**/*.java
-
-# Ejecutar
-java -cp bin colectivo.aplicacion.Simulador
-```
 
 ---
 
@@ -452,4 +440,4 @@ Proyecto desarrollado como trabajo final para la materia Algoritmos y Programaci
 
 ## Licencia
 
-Este proyecto es de uso académico.
+Este proyecto es de uso académico. No robar causa, no seas malo :v
