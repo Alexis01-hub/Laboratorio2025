@@ -5,9 +5,12 @@ package colectivo.modelo;
  * una parada de origen y una parada de destino.
  */
 public class Pasajero {
-    private int id;
-    private Parada origen;
+    private final int id;
+    private final Parada origen;
     private Parada destino;
+    private int colectivosEsperados = 0; // Contador de colectivos que el pasajero espera tomar
+    private boolean viajoSentado = false;
+    private boolean subio = false; // Indica si el pasajero subió al colectivo
 
     /**
      * Crea un nuevo pasajero con el id, la parada de origen y la parada de destino especificados.
@@ -16,10 +19,11 @@ public class Pasajero {
      * @param origen  Parada de origen del pasajero.
      * @param destino Parada de destino del pasajero.
      */
-    public Pasajero(int id, Parada origen, Parada destino) {
+    public Pasajero(int id, Parada origen, Parada destino, boolean viajoSentado) {
         this.id = id; 
         this.origen = origen;
         this.destino = destino;
+        this.viajoSentado = viajoSentado
     }
 
     /**
@@ -58,6 +62,32 @@ public class Pasajero {
         this.destino = destino;
     }
 
+    public void incrementarColectivosEsperados() {
+        colectivosEsperados++;
+    }
+
+    public void registrarSubida(boolean viajoSentado) {
+        this.subio = true;
+        this.viajoSentado = viajoSentado;
+    }
+
+    public boolean subio() {
+        return subio; // Devuelve si el pasajero subió al colectivo
+    }
+
+    public int getClasificacion() {
+        if (!subio) {
+            return 1;} // no subió
+            if (colectivosEsperados ==1 && viajoSentado) {
+                return 5; // primero + sentado
+                if (colectivosEsperados ==1) {
+                    return 4;} // primero + parado
+                    if (colectivosEsperados == 2) {
+                        return 3;} // segundo
+                    } else {
+                        return 2; // más de dos colectivos
+                    }
+    }
     /**
      * Devuelve una representación en cadena del pasajero.
      *
