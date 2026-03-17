@@ -20,10 +20,10 @@ public class Pasajero {
      * @param destino Parada de destino del pasajero.
      */
     public Pasajero(int id, Parada origen, Parada destino, boolean viajoSentado) {
-        this.id = id; 
+        this.id = id;
         this.origen = origen;
         this.destino = destino;
-        this.viajoSentado = viajoSentado
+        this.viajoSentado = viajoSentado;
     }
 
     /**
@@ -77,17 +77,18 @@ public class Pasajero {
 
     public int getClasificacion() {
         if (!subio) {
-            return 1;} // no subió
-            if (colectivosEsperados ==1 && viajoSentado) {
-                return 5; // primero + sentado
-                if (colectivosEsperados ==1) {
-                    return 4;} // primero + parado
-                    if (colectivosEsperados == 2) {
-                        return 3;} // segundo
-                    } else {
-                        return 2; // más de dos colectivos
-                    }
+            return 1; // no subió
+        } else if (colectivosEsperados == 0 && viajoSentado) {
+            return 5; // primero + sentado
+        } else if (colectivosEsperados == 0) {
+            return 4; // primero + parado
+        } else if (colectivosEsperados == 1) {
+            return 3; // segundo
+        } else {
+            return 2; // más de dos colectivos
+        }
     }
+
     /**
      * Devuelve una representación en cadena del pasajero.
      *

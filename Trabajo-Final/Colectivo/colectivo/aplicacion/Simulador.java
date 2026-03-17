@@ -29,6 +29,10 @@ public class Simulador {
         int cantidadPasajeros = Integer.parseInt(config.getProperty("cantidadPasajeros", "100"));
         String archivoParadas = config.getProperty("parada", "Colectivo/parada.txt");
         String archivoLineas = config.getProperty("linea", "Colectivo/linea.txt");
+        int capacidadMaxima = Integer.parseInt(config.getProperty("capacidadMaximaColectivo", config.getProperty("capacidadMaxima", "30")));
+        if (capacidadMaxima <= 0) {
+            throw new IllegalArgumentException("capacidadMaximaColectivo debe ser mayor a 0");
+        }
 
         // Cargar datos de paradas y líneas
         Map<Integer, Parada> paradas = CargadorDatos.cargarParadas(archivoParadas); // Carga las paradas desde el archivo
@@ -40,7 +44,7 @@ public class Simulador {
         // Crear un colectivo por cada línea
         List<Colectivo> colectivos = new ArrayList<>(); // Lista para almacenar los colectivos creados
         for (Linea l : lineas.values()) {
-            colectivos.add(new Colectivo(l)); // Crea un nuevo colectivo para cada línea y lo agrega a la lista
+            colectivos.add(new Colectivo(l, capacidadMaxima)); // Crea un nuevo colectivo para cada línea y lo agrega a la lista
         }
 
         // Asignar pasajeros a colectivos solo si la línea contiene origen y destino
@@ -48,7 +52,18 @@ public class Simulador {
             for (Pasajero p : pasajeros) {
                 List<Parada> paradasDeLaLinea = c.getLinea().getParadas(); // Obtiene las paradas de la línea del colectivo
                 if (paradasDeLaLinea.contains(p.getOrigen()) && paradasDeLaLinea.contains(p.getDestino())) {
-                    c.subirPasajero(p); // Si el origen y destino del pasajero están en las paradas de la línea, lo sube
+                    //valida capacidad
+                    boolean pudoSubir = c.subirPasajero(p);
+                    if (pudoSubir){
+                        //determina si sube parado o sentado
+                        int capacidadSentados = (int) (c.getCantidadMaxima() * 0.7); // 70% de la capacidad total para sentados
+                        boolean viajoSentado = c.getPasajeros().size() <= capacidadSentados; // Si el número de pasajeros es menor o igual a la capacidad de sentados, viaja sentado
+                        p.registrarSubida(viajoSentado); // Registra la subida del pasajero, indicando si viaja sentado o parado
+                    } else {
+                        // No subio al colectivo por estar lleno
+                        p.incrementarColectivosEsperados();
+                    }
+
                 }
             }
         }

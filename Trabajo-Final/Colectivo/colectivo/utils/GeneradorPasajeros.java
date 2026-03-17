@@ -35,7 +35,7 @@ public class GeneradorPasajeros {
             do {
                 destino = listaParadas.get(rand.nextInt(listaParadas.size())); // Selecciona un destino aleatorio de la lista de paradas
             } while (destino.equals(origen)); // repite hasta que el destino sea diferente del origen
-            pasajeros.add(new Pasajero(i, origen, destino)); // Crea un nuevo pasajero con el id, origen y destino seleccionados
+            pasajeros.add(new Pasajero(i, origen, destino, false)); // Crea un nuevo pasajero con el id, origen y destino seleccionados
         }
         return pasajeros; // Devuelve la lista de pasajeros generados
     }
