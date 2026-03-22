@@ -11,19 +11,24 @@ public class Pasajero {
     private int colectivosEsperados = 0; // Contador de colectivos que el pasajero espera tomar
     private boolean viajoSentado = false;
     private boolean subio = false; // Indica si el pasajero subió al colectivo
+    private boolean llego = false; // Indica si el pasajero llegó a su destino final
+    private final String codigoLineaAsignada;
 
-    /**
-     * Crea un nuevo pasajero con el id, la parada de origen y la parada de destino especificados.
-     *
-     * @param id      Identificador único del pasajero.
-     * @param origen  Parada de origen del pasajero.
-     * @param destino Parada de destino del pasajero.
-     */
+
     public Pasajero(int id, Parada origen, Parada destino, boolean viajoSentado) {
+        this(id, origen, destino, viajoSentado, null);
+    }
+
+    public Pasajero(int id, Parada origen, Parada destino, boolean viajoSentado, String codigoLineaAsignada) {
         this.id = id;
         this.origen = origen;
         this.destino = destino;
         this.viajoSentado = viajoSentado;
+        this.codigoLineaAsignada = codigoLineaAsignada;
+    }
+
+    public String getCodigoLineaAsignada() {
+        return codigoLineaAsignada;
     }
 
     /**
@@ -75,6 +80,23 @@ public class Pasajero {
         return subio; // Devuelve si el pasajero subió al colectivo
     }
 
+
+    /**
+     * Marca que el pasajero llegó a su destino final.
+     */
+    public void marcarComoLlegado() {
+        this.llego = true;
+    }
+
+    /**
+     * Verifica si el pasajero llegó a su destino final.
+     *
+     * @return true si el pasajero llegó a su destino, false en caso contrario
+     */
+    public boolean llego() {
+        return llego;
+    }
+
     public int getClasificacion() {
         if (!subio) {
             return 1; // no subió
@@ -84,8 +106,10 @@ public class Pasajero {
             return 4; // primero + parado
         } else if (colectivosEsperados == 1) {
             return 3; // segundo
-        } else {
+        } else if (colectivosEsperados > 2){
             return 2; // más de dos colectivos
+        }else {
+            return 3; //caso borde: espero exactamente 2
         }
     }
 

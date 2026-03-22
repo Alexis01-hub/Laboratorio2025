@@ -1,5 +1,6 @@
 package colectivo.modelo;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 import net.datastructures.ChainHashMap;
@@ -12,6 +13,8 @@ public class Colectivo {
     private List<Pasajero> pasajeros;
     private int cantidadMaxima;
     private String id;
+    private ChainHashMap<Integer, List<Integer>> subidasPorParada;
+    private ChainHashMap<Integer, List<Integer>> bajadasPorParada;
 
     // clave: indice de tramo (0 = P1-P2, 1 = P2-P3, ...)
     private ChainHashMap<Integer, Integer> pasajerosPorTramo;
@@ -22,6 +25,8 @@ public class Colectivo {
         this.cantidadMaxima = cantidadMaxima;
         this.id = null;
         this.pasajerosPorTramo = new ChainHashMap<>();
+        this.subidasPorParada = new ChainHashMap<>();
+        this.bajadasPorParada = new ChainHashMap<>();
     }
 
     public Linea getLinea() {
@@ -64,4 +69,41 @@ public class Colectivo {
         Integer valor = pasajerosPorTramo.get(tramoIndex);
         return (valor == null) ? 0 : valor;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void registrarSubidaEnParada(int paradaIndex, Pasajero pasajero) {
+        List<Integer> ids = subidasPorParada.get(paradaIndex);
+        if (ids == null) {
+            ids = new ArrayList<>();
+            subidasPorParada.put(paradaIndex, ids);
+        }
+        ids.add(pasajero.getId());
+    }
+
+    public void registrarBajadaEnParada(int paradaIndex, Pasajero pasajero) {
+        List<Integer> ids = bajadasPorParada.get(paradaIndex);
+        if (ids == null) {
+            ids = new ArrayList<>();
+            bajadasPorParada.put(paradaIndex, ids);
+        }
+        ids.add(pasajero.getId());
+    }
+
+    public List<Integer> getSubidasEnParada(int paradaIndex) {
+        List<Integer> ids = subidasPorParada.get(paradaIndex);
+        return ids == null ? Collections.emptyList() : ids;
+    }
+
+    public List<Integer> getBajadasEnParada(int paradaIndex) {
+        List<Integer> ids = bajadasPorParada.get(paradaIndex);
+        return ids == null ? Collections.emptyList() : ids;
+    }
+
 }
