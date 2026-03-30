@@ -12,6 +12,7 @@ import java.util.Random;
 
 /**
  * Clase utilitaria para generar pasajeros aleatorios para la simulación.
+ * Permite crear pasajeros con orígenes y destinos válidos basados en las líneas y paradas disponibles.
  */
 public class GeneradorPasajeros {
 
@@ -20,9 +21,9 @@ public class GeneradorPasajeros {
      * IMPORTANTE: El destino siempre será DESPUÉS del origen en la lista de paradas.
      * Esto asegura que todos los pasajeros generados sean válidos para alguna línea.
      *
-     * @param cantidad la cantidad de pasajeros a generar
-     *   el mapa de paradas disponibles
-     * @return una lista de pasajeros generados aleatoriamente
+     * @param cantidad la cantidad de pasajeros a generar.
+     * @param lineas el mapa de líneas disponibles, donde la clave es el código de la línea y el valor es la línea.
+     * @return una lista de pasajeros generados aleatoriamente.
      */
     public static List<Pasajero> generarDesdeLineas(int cantidad, Map<String, Linea> lineas) {
         List<Pasajero> pasajeros = new ArrayList<>();
@@ -60,8 +61,12 @@ public class GeneradorPasajeros {
     }
 
     /**
-     * Metodo de compatibilidad para tests previos
-     * Genera con la lista de paradas ordenada por ID.
+     * Metodo de compatibilidad para tests previos.
+     * Genera pasajeros utilizando una lista de paradas ordenada por ID.
+     *
+     * @param cantidad la cantidad de pasajeros a generar.
+     * @param paradas el mapa de paradas disponibles, donde la clave es el ID de la parada y el valor es la parada.
+     * @return una lista de pasajeros generados aleatoriamente.
      */
     public static List<Pasajero> generar(int cantidad, Map<Integer, Parada> paradas) {
         List<Pasajero> pasajeros = new ArrayList<>();

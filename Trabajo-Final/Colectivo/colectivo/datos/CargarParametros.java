@@ -8,7 +8,7 @@ import java.util.Properties;
 /**
  * Clase utilitaria para cargar los parámetros de configuración desde un archivo properties.
  * Permite obtener las rutas de los archivos de líneas y paradas configuradas,
- * así como la cantidad máxima de pasajeros.
+ * así como la cantidad máxima de pasajeros permitida en la simulación.
  */
 public class CargarParametros {
     
@@ -20,7 +20,7 @@ public class CargarParametros {
      * Carga los parámetros desde el archivo 'config.properties'.
      * Asigna los valores de las propiedades 'linea', 'parada' y 'cantidadPasajeros' a las variables correspondientes.
      *
-     *
+     * @return Un objeto Properties con las configuraciones cargadas.
      * @throws IOException Si ocurre un error al leer el archivo o faltan parámetros requeridos.
      */
     public static Properties cargar() throws IOException {

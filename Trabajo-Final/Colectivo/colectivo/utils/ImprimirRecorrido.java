@@ -10,8 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Clase utilitaria para imprimir los recorridos de los colectivos en función de las líneas seleccionadas.
+ * Permite al usuario interactuar para seleccionar una línea y visualizar los recorridos asociados.
+ */
 public class ImprimirRecorrido {
 
+    /**
+     * Imprime los recorridos de los colectivos según las líneas seleccionadas por el usuario.
+     *
+     * @param colectivos Lista de colectivos disponibles.
+     * @param lineas Mapa de líneas disponibles, donde la clave es el código de la línea y el valor es la línea.
+     */
     public static void imprimirRecorrido(List<Colectivo> colectivos, Map<String, Linea> lineas) {
         Scanner scanner = new Scanner(System.in);
         boolean continuar = true;
@@ -28,6 +38,7 @@ public class ImprimirRecorrido {
                 String codigoSeleccionado = scanner.nextLine().trim();
 
                 for (Linea l : lineas.values()) {
+                    // si el codigo de l es igual al que busca el usuario. entonces ese codigo es el deseado a ver
                     if (l.getCodigo().equalsIgnoreCase(codigoSeleccionado)) {
                         lineaSeleccionada = l;
                         break;
@@ -40,7 +51,14 @@ public class ImprimirRecorrido {
             }
 
             List<Colectivo> recorridosLinea = new ArrayList<>();
+            /**
+             * Filtra los colectivos que pertenecen a la línea seleccionada.
+             */
             for (Colectivo c : colectivos) {
+                /*
+                si el colectivo tiene la misma linea que la seleccionada por el usuario.
+                entonces lo agrega a recorridosLinea
+                 */
                 if (c.getLinea().getCodigo().equalsIgnoreCase(lineaSeleccionada.getCodigo())) {
                     recorridosLinea.add(c);
                 }
@@ -53,18 +71,26 @@ public class ImprimirRecorrido {
                 System.out.println("Línea " + lineaSeleccionada.getCodigo() + " - Recorridos registrados: " + recorridosLinea.size());
                 System.out.println("============================================================\n");
 
-                List<Parada> paradas = lineaSeleccionada.getParadas();
+                List<Parada> paradas = lineaSeleccionada.getParadas(); // en la lista paradas guarda todas las paradas de la linea deseada por el usuario
 
                 for (int r = 0; r < recorridosLinea.size(); r++) {
                     Colectivo colectivo = recorridosLinea.get(r);
+
+                    /**
+                     * Obtiene el identificador del colectivo o genera uno predeterminado si es nulo.
+                     */
                     String idMostrado = colectivo.getId() == null ? ("Recorrido_" + (r + 1)) : colectivo.getId();
 
                     System.out.println("#################### " + idMostrado + " ####################");
+                    // Variable que lleva el conteo de pasajeros a bordo en el colectivo durente el recorrido
                     int aBordo = 0;
 
                     for (int i = 0; i < paradas.size(); i++) {
                         Parada parada = paradas.get(i);
 
+                        /**
+                         * Obtiene las listas de pasajeros que suben y bajan en la parada actual.
+                         */
                         List<Integer> suben = colectivo.getSubidasEnParada(i);
                         List<Integer> bajan = colectivo.getBajadasEnParada(i);
 

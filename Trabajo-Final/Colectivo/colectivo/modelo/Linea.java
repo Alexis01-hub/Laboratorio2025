@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Representa una línea de colectivo, identificada por un código y una lista de paradas.
+ * Representa una línea de colectivo, identificada por un código único y una lista de paradas.
+ * Proporciona métodos para gestionar las paradas asociadas a la línea.
  */
 public class Linea {
     private String codigo;

@@ -26,7 +26,7 @@ class ColectivoTest {
         linea = new Linea("L1");
         linea.agregarParada(parada1);
         linea.agregarParada(parada2);
-        colectivo = new Colectivo(linea, 30); // ACTUALIZADO: agregar capacidadMaxima
+        colectivo = new Colectivo(30, linea); // ACTUALIZADO: agregar capacidadMaxima
         pasajero = new Pasajero(1, parada1, parada2, false); // ACTUALIZADO: agregar viajoSentado
     }
 
@@ -90,7 +90,7 @@ class ColectivoTest {
     @Test
     @DisplayName("estaLleno retorna true cuando capacidad es alcanzada")
     void estaLlenoRetornaTrue() {
-        Colectivo colectivoChico = new Colectivo(linea, 2); // NUEVO: crear colectivo con capacidad de 2
+        Colectivo colectivoChico = new Colectivo(2, linea); // NUEVO: crear colectivo con capacidad de 2
         Pasajero p1 = new Pasajero(1, parada1, parada2, false);
         Pasajero p2 = new Pasajero(2, parada1, parada2, false);
         Pasajero p3 = new Pasajero(3, parada1, parada2, false);
@@ -135,7 +135,7 @@ class ColectivoTest {
 
         while (pasajerosRestantes > 0 && numeroRecorrido <= 10) {
             // Crear nuevo colectivo para este recorrido
-            Colectivo colectivo = new Colectivo(linea, 3); // Capacidad de 3
+            Colectivo colectivo = new Colectivo(3, linea); // Capacidad de 3
 
             // Simular el recorrido por cada parada
             for (Parada parada : linea.getParadas()) {

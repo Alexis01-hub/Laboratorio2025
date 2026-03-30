@@ -37,7 +37,7 @@ class CalculadorMetricasTest {
         linea.agregarParada(p2);
         linea.agregarParada(p3);
 
-        colectivo = new Colectivo(linea, 10);
+        colectivo = new Colectivo(10, linea);
     }
 
     @Test

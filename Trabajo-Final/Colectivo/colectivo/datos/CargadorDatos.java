@@ -9,20 +9,21 @@ import net.datastructures.Map;
 import net.datastructures.ChainHashMap; // chainhashmap es necesario porque en la simulacion insertamos y eliminamos pasajeros frecuentemente
 
 /**
- * Clase utilitaria para cargar datos de líneas y paradas desde archivos de texto.
+ * Clase encargada de cargar los datos necesarios para la simulación del sistema de transporte público.
+ * Proporciona métodos para cargar líneas, paradas y otros datos relevantes desde archivos o fuentes externas.
  */
 public class CargadorDatos {
 
     /**
-     * Carga las líneas de colectivos desde un archivo de texto.
+     * Carga las líneas de transporte público desde un archivo de texto.
      *
-     * @param fileName nombre del archivo de líneas
-     * @param paradas mapa de paradas ya cargadas, para asociar a cada línea
-     * @return un HashMap con las líneas cargadas, donde la clave es el código de la línea
-     * @throws FileNotFoundException si el archivo no existe
+     * @param archivo El archivo de texto que contiene los datos de las líneas.
+     * @param paradas Mapa de paradas ya cargadas, para asociar a cada línea.
+     * @return Un HashMap con las líneas cargadas, donde la clave es el código de la línea.
+     * @throws FileNotFoundException Si el archivo no existe o no se puede leer.
      */
-    public static Map<String, Linea> cargarLineas(String fileName, Map<Integer, Parada> paradas) throws FileNotFoundException {
-        Scanner read = new Scanner(new File(fileName));
+    public static Map<String, Linea> cargarLineas(String archivo, Map<Integer, Parada> paradas) throws FileNotFoundException {
+        Scanner read = new Scanner(new File(archivo));
         Map<String, Linea> lineas = new ChainHashMap<>(); // Mapa para almacenar las líneas cargadas
         // Itera sobre cada línea del archivo
         while (read.hasNextLine()) {
@@ -53,17 +54,14 @@ public class CargadorDatos {
     }
 
     /**
-     * Carga las paradas de colectivos desde un archivo de texto.
-     * Cada línea del archivo debe tener el formato:
+     * Carga las paradas de transporte público desde un archivo de texto.
      *
-     * " idParada;direccion; "
-     *
-     * @param fileName nombre del archivo de paradas
-     * @return un HashMap con las paradas cargadas, donde la clave es el id de la parada
-     * @throws FileNotFoundException si el archivo no existe
+     * @param archivo El archivo de texto que contiene los datos de las paradas.
+     * @return Un HashMap con las paradas cargadas, donde la clave es el ID de la parada.
+     * @throws FileNotFoundException Si el archivo no existe o no se puede leer.
      */
-    public static Map<Integer, Parada> cargarParadas(String fileName) throws FileNotFoundException {
-        Scanner read = new Scanner(new File(fileName)); // Crea un scanner para leer el archivo de paradas;
+    public static Map<Integer, Parada> cargarParadas(String archivo) throws FileNotFoundException {
+        Scanner read = new Scanner(new File(archivo)); // Crea un scanner para leer el archivo de paradas;
         Map<Integer, Parada> paradas = new ChainHashMap<>(); // Mapa para almacenar las paradas cargadas
         
         // Itera sobre cada línea del archivo

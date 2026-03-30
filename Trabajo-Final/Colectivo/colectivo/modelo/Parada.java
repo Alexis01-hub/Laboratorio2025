@@ -1,7 +1,7 @@
 package colectivo.modelo;
 
 /**
- * Representa una parada del colectivo, identificada por un id y una dirección.
+ * Representa una parada de colectivo, identificada por un ID único y una dirección específica.
  */
 public class Parada {
     private int id;

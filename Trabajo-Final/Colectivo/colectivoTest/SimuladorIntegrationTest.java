@@ -40,7 +40,7 @@ class SimuladorIntegrationTest {
         int pasajerosRestantes = pasajeros.size();
 
         while (pasajerosRestantes > 0 && numeroRecorrido <= 20) {
-            Colectivo colectivo = new Colectivo(linea, capacidadMaxima);
+            Colectivo colectivo = new Colectivo(capacidadMaxima, linea);
             colectivo.setId(linea.getCodigo() + "_" + numeroRecorrido);
 
             for (int i = 0; i < linea.getParadas().size(); i++) {

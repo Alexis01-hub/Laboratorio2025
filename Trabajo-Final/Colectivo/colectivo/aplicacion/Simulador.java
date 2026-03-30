@@ -19,12 +19,8 @@ import net.datastructures.Map;
 
 
 /**
- * Clase principal que ejecuta la simulación del sistema de colectivos.
- * Lee la configuración, genera pasajeros aleatorios y simula recorridos por línea.
- *
- * Supuesto de modelado:
- * cada instancia de Colectivo representa un recorrido (vuelta) de una línea,
- * no un vehículo físico único reutilizado entre vueltas.
+ * Clase principal que simula el funcionamiento del sistema de transporte público.
+ * Se encarga de inicializar los datos, ejecutar la simulación y mostrar los resultados.
  */
 public class Simulador {
     private static final CalculadorMetricas calculadorMetricas = new CalculadorMetricas(); // Instancia de CalculadorMetricas para calcular métricas al finalizar la simulación
@@ -80,9 +76,9 @@ public class Simulador {
 
             while (pasajerosRestantes > 0) {
                 // cada instancia representa un recorrido (vuelta ) de la linea
-                Colectivo colectivo = new Colectivo(linea, capacidadMaxima);
-                String idColectivo = linea.getCodigo() + "_" + numeroRecorrido;
-                colectivo.setId(idColectivo); // formato:Lx_n (linea x, recorrido n)
+                Colectivo colectivo = new Colectivo(capacidadMaxima, linea);
+                String idColectivo = linea.getCodigo() + ". Recorrido: " + numeroRecorrido;
+                colectivo.setId(idColectivo); // formato:Lx. Recorrido: n (linea x, recorrido n)
 
                 // Simular el recorrido por cada parada de la línea
                 for (int i = 0; i < linea.getParadas().size(); i++) {
@@ -219,3 +215,4 @@ public class Simulador {
         ImprimirRecorrido.imprimirRecorrido(colectivosUtilizados, lineas);
     }
 }
+
